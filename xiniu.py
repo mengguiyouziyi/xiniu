@@ -23,14 +23,14 @@ headers = {
 }
 
 
-def json_loop(tstamp):
+def json_loop(tstamp, num, field):
 	mysql = pymysql.connect(host='etl2.innotree.org', port=3308, user='spider', password='spider', db='spider',
 	                        charset='utf8', cursorclass=pymysql.cursors.DictCursor)
 	cursor = mysql.cursor()
 
 	url = "http://www.xiniudata.com/api2/service/x_service/system_discover_topic/list_funding_topic_company"
-	payload = "{\"payload\":{\"topicId\":26,\"sectors\":[],\"publishTime\":%s,\"limit\":350,\"isChina\":false}}" % str(
-		tstamp)
+	payload = "{\"payload\":{\"topicId\":26,\"sectors\":[],\"publishTime\":%s,\"limit\":%s,\"isChina\":%s}}" % (str(
+		tstamp), num, field)
 
 	response = requests.request("POST", url, data=payload, headers=headers)
 	text = json.loads(response.text)
@@ -200,12 +200,22 @@ def get_currency(num):
 
 if __name__ == '__main__':
 	tstamp = int(time.time()) * 1000
-	for n in range(10):
-		print(n)
-		try:
-			json_loop(tstamp)
-		except Exception as e:
-			print(e)
-			continue
-		tstamp -= 86400 * 1000 * 10
+	# for n in range(1):
+	# 	print(n)
+	# 	try:
+	# 		json_loop(tstamp, 50, 'true')
+	# 	except Exception as e:
+	# 		print(e)
+	# 		continue
+	# 	tstamp -= 86400 * 1000 * 10
+
+
+	try:
+		json_loop(tstamp, 50, 'false')
+		json_loop(tstamp, 50, 'true')
+	except Exception as e:
+		print(e)
+
+
+
 
