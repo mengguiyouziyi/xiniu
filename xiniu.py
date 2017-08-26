@@ -24,7 +24,7 @@ headers = {
 
 
 def json_loop(tstamp, num, field):
-	mysql = pymysql.connect(host='etl2.innotree.org', port=3308, user='spider', password='spider', db='spider',
+	mysql = pymysql.connect(host='etl1.innotree.org', port=3308, user='spider', password='spider', db='spider',
 	                        charset='utf8', cursorclass=pymysql.cursors.DictCursor)
 	cursor = mysql.cursor()
 
@@ -211,8 +211,8 @@ if __name__ == '__main__':
 
 
 	try:
-		json_loop(tstamp, 50, 'false')
-		json_loop(tstamp, 50, 'true')
+		json_loop(tstamp, 30, 'false')
+		json_loop(tstamp, 30, 'true')
 	except Exception as e:
 		print(e)
 
