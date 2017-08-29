@@ -24,7 +24,7 @@ headers = {
 
 
 def json_loop(tstamp, num, field):
-	mysql = pymysql.connect(host='etl1.innotree.org', port=3308, user='spider', password='spider', db='spider',
+	mysql = pymysql.connect(host='etl2.innotree.org', port=3308, user='spider', password='spider', db='spider',
 	                        charset='utf8', cursorclass=pymysql.cursors.DictCursor)
 	cursor = mysql.cursor()
 
@@ -84,10 +84,7 @@ def json_loop(tstamp, num, field):
 				args = (com_id, code, item_name, com_fullName, com_website, com_description, com_brief, com_locationId, com_address, com_establishDate, com_logo, com_createTime, com_modifyTime, com_corporateId, tags)
 				cursor.execute(sql, args)
 				mysql.commit()
-				print(
-					com_id, code, item_name, com_fullName, com_website, com_description, com_brief, com_locationId,
-					com_address,
-					com_establishDate, com_logo, com_createTime, com_modifyTime, com_corporateId, tags)
+				print(com_id)
 
 
 				fundings = company_obj['fundings']
@@ -119,9 +116,7 @@ def json_loop(tstamp, num, field):
 							args = (fund_id, fund_round, fund_currency, fund_investment, fund_fundingDate, fund_modifyTime, fund_investorsRaw, fund_investors, fund_newsId, fund_publishDate, fund_corporateId, com_id)
 							cursor.execute(sql, args)
 							mysql.commit()
-							print(
-								fund_id, fund_round, fund_currency, fund_investment, fund_fundingDate, fund_modifyTime, fund_investorsRaw, fund_investors, fund_newsId, fund_publishDate, fund_corporateId)
-
+							print(fund_id)
 
 							investors = funding_obj.get('investors', '')
 							if investors:
@@ -146,7 +141,7 @@ def json_loop(tstamp, num, field):
 										args = (inv_id, inv_name, inv_website, inv_description, inv_logo, inv_stage, inv_field, inv_createTime, inv_modifyTime, inv_establishDate, inv_locationId, inv_fundingCntFrom2017, fund_id)
 										cursor.execute(sql, args)
 										mysql.commit()
-										print(inv_id, inv_name, inv_website, inv_description, inv_logo, inv_stage, inv_field, inv_createTime, inv_modifyTime, inv_establishDate, inv_locationId, inv_fundingCntFrom2017)
+										print(inv_id)
 									except Exception as e:
 										print(e)
 										continue
@@ -211,8 +206,8 @@ if __name__ == '__main__':
 
 
 	try:
-		json_loop(tstamp, 30, 'false')
-		json_loop(tstamp, 30, 'true')
+		json_loop(tstamp, 50, 'false')
+		json_loop(tstamp, 50, 'true')
 	except Exception as e:
 		print(e)
 
