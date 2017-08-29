@@ -208,6 +208,7 @@ if __name__ == '__main__':
 	try:
 		json_loop(tstamp, 50, 'false')
 		json_loop(tstamp, 50, 'true')
+		print('done')
 	except Exception as e:
 		print(e)
 
