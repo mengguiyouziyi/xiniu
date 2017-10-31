@@ -2,6 +2,7 @@ import json
 import time
 import requests
 import pymysql
+from traceback import print_exc
 from urllib.parse import urljoin
 
 base_url = 'http://www.xiniudata.com'
@@ -24,7 +25,7 @@ headers = {
 
 
 def json_loop(tstamp, num, field):
-	mysql = pymysql.connect(host='etl2.innotree.org', port=3308, user='spider', password='spider', db='spider',
+	mysql = pymysql.connect(host='172.31.215.38', port=3306, user='spider', password='spider', db='spider',
 	                        charset='utf8', cursorclass=pymysql.cursors.DictCursor)
 	cursor = mysql.cursor()
 
@@ -142,14 +143,14 @@ def json_loop(tstamp, num, field):
 										cursor.execute(sql, args)
 										mysql.commit()
 										print(inv_id)
-									except Exception as e:
-										print(e)
+									except:
+										print_exc()
 										continue
-						except Exception as e:
-							print(e)
+						except:
+							print_exc()
 							continue
-			except Exception as e:
-				print(e)
+			except:
+				print_exc()
 				continue
 
 
@@ -199,18 +200,19 @@ if __name__ == '__main__':
 	# 	print(n)
 	# 	try:
 	# 		json_loop(tstamp, 50, 'true')
-	# 	except Exception as e:
-	# 		print(e)
+	# 	except:
+	# 		print_exc()
 	# 		continue
 	# 	tstamp -= 86400 * 1000 * 10
 
 
 	try:
-		json_loop(tstamp, 50, 'false')
-		json_loop(tstamp, 50, 'true')
+		json_loop(tstamp, 100, 'false')
+		json_loop(tstamp, 100, 'true')
 		print('done')
-	except Exception as e:
-		print(e)
+	except:
+		print_exc()
+		
 
 
 
