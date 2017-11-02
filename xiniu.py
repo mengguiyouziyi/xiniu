@@ -1,3 +1,4 @@
+# coding:utf-8
 import json
 import time
 import requests
@@ -82,11 +83,11 @@ def json_loop(tstamp, num, field):
 
 				# sql = """update xiniu_com set com_id=%s, code=%s, item_name=%s, com_fullName=%s, com_website=%s, com_description=%s, com_brief=%s, com_locationId=%s, com_address=%s, com_establishDate=%s, com_logo=%s, com_createTime=%s, com_modifyTime=%s, com_corporateId=%s, tags=%s"""
 				sql = """replace into xiniu_com (com_id, code, item_name, com_fullName, com_website, com_description, com_brief, com_locationId, com_address, com_establishDate, com_logo, com_createTime, com_modifyTime, com_corporateId, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-				args = (com_id, code, item_name, com_fullName, com_website, com_description, com_brief, com_locationId, com_address, com_establishDate, com_logo, com_createTime, com_modifyTime, com_corporateId, tags)
+				args = (com_id, code, item_name, com_fullName, com_website, com_description, com_brief, com_locationId,
+				        com_address, com_establishDate, com_logo, com_createTime, com_modifyTime, com_corporateId, tags)
 				cursor.execute(sql, args)
 				mysql.commit()
 				print(com_id)
-
 
 				fundings = company_obj['fundings']
 				if fundings:
@@ -114,7 +115,9 @@ def json_loop(tstamp, num, field):
 							fund_corporateId = funding.get('corporateId', '')
 							# sql = """update xiniu_fund set fund_id=%s, fund_round=%s, fund_currency=%s, fund_investment=%s, fund_fundingDate=%s, fund_modifyTime=%s, fund_investorsRaw=%s, fund_investors=%s, fund_newsId=%s, fund_publishDate=%s, fund_corporateId=%s"""
 							sql = """replace into xiniu_fund (fund_id, fund_round, fund_currency, fund_investment, fund_fundingDate, fund_modifyTime, fund_investorsRaw, fund_investors, fund_newsId, fund_publishDate, fund_corporateId, com_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-							args = (fund_id, fund_round, fund_currency, fund_investment, fund_fundingDate, fund_modifyTime, fund_investorsRaw, fund_investors, fund_newsId, fund_publishDate, fund_corporateId, com_id)
+							args = (
+							fund_id, fund_round, fund_currency, fund_investment, fund_fundingDate, fund_modifyTime,
+							fund_investorsRaw, fund_investors, fund_newsId, fund_publishDate, fund_corporateId, com_id)
 							cursor.execute(sql, args)
 							mysql.commit()
 							print(fund_id)
@@ -139,7 +142,10 @@ def json_loop(tstamp, num, field):
 										inv_fundingCntFrom2017 = investor_obj.get('fundingCntFrom2017', 0)
 										# sql = """update xiniu_inve set inv_id=%s, inv_name=%s, inv_website=%s, inv_description=%s, inv_logo=%s, inv_stage=%s, inv_field=%s, inv_createTime=%s, inv_modifyTime=%s, inv_establishDate=%s, inv_locationId=%s, inv_fundingCntFrom2017=%s"""
 										sql = """replace into xiniu_inve (inv_id, inv_name, inv_website, inv_description, inv_logo, inv_stage, inv_field, inv_createTime, inv_modifyTime, inv_establishDate, inv_locationId, inv_fundingCntFrom2017, fund_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-										args = (inv_id, inv_name, inv_website, inv_description, inv_logo, inv_stage, inv_field, inv_createTime, inv_modifyTime, inv_establishDate, inv_locationId, inv_fundingCntFrom2017, fund_id)
+										args = (
+										inv_id, inv_name, inv_website, inv_description, inv_logo, inv_stage, inv_field,
+										inv_createTime, inv_modifyTime, inv_establishDate, inv_locationId,
+										inv_fundingCntFrom2017, fund_id)
 										cursor.execute(sql, args)
 										mysql.commit()
 										print(inv_id)
@@ -177,7 +183,8 @@ def get_location(num):
 
 
 def fmat_stamp(t):
-	ti = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t / 1000)) if t else time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(0 / 1000))
+	ti = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t / 1000)) if t else time.strftime("%Y-%m-%d %H:%M:%S",
+	                                                                                          time.localtime(0 / 1000))
 	return ti
 
 
@@ -212,8 +219,3 @@ if __name__ == '__main__':
 		print('done')
 	except:
 		print_exc()
-		
-
-
-
-
